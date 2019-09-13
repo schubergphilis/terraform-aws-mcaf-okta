@@ -5,7 +5,7 @@ resource "aws_iam_saml_provider" "default" {
   saml_metadata_document = var.metadata
 }
 
-data "aws_iam_policy_document" "default" {
+data "aws_iam_policy_document" "okta_assume_policy" {
   statement {
     effect  = "Allow"
     actions = ["sts:AssumeRoleWithSAML"]
@@ -23,18 +23,19 @@ data "aws_iam_policy_document" "default" {
   }
 }
 
-resource "aws_iam_role" "default" {
-  name               = var.name
-  assume_role_policy = data.aws_iam_policy_document.default.json
-  tags               = var.tags
+module "platform_admin_role" {
+  providers = {
+    aws = aws
+  }
+
+  source        = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.1.5"
+  name          = var.name
+  assume_policy = data.aws_iam_policy_document.okta_assume_policy.json
+  policy_arns   = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  tags          = var.tags
 }
 
-resource "aws_iam_role_policy_attachment" "default" {
-  role       = aws_iam_role.default.name
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
-}
-
-data "aws_iam_policy_document" "cross_account_role" {
+data "aws_iam_policy_document" "cross_account_policy" {
   statement {
     actions = [
       "iam:ListRoles",
@@ -48,10 +49,15 @@ data "aws_iam_policy_document" "cross_account_role" {
 }
 
 module "okta_cross_account_role" {
-  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.1.3"
+  providers = {
+    aws = aws
+  }
+
+  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.1.5"
   name                  = "Okta-Idp-cross-account-role"
   principal_type        = "AWS"
   principal_identifiers = ["arn:aws:iam::${var.account_id}:root"]
-  role_policy           = data.aws_iam_policy_document.cross_account_role.json
+  role_policy           = data.aws_iam_policy_document.cross_account_policy.json
+  postfix               = false
   tags                  = var.tags
 }
