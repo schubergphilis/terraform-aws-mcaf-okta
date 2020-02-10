@@ -13,6 +13,12 @@ variable "name" {
   description = "A name for the default platform admin role"
 }
 
+variable "postfix" {
+  type        = bool
+  default     = true
+  description = "Append \"Policy\" and \"Role\" to the created admin role and policy names respectively"
+}
+
 variable "tags" {
   type        = map(string)
   description = "A mapping of tags to assign to the resources"
