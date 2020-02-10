@@ -16,7 +16,7 @@ variable "name" {
 variable "postfix" {
   type        = bool
   default     = true
-  description = "Postfix the role and policy names with Role and Policy"
+  description = "Append \"Policy\" and \"Role\" to the created admin role and policy names respectively"
 }
 
 variable "tags" {
