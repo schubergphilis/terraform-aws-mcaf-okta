@@ -32,6 +32,7 @@ module "platform_admin_role" {
   name          = var.name
   assume_policy = data.aws_iam_policy_document.okta_assume_policy.json
   policy_arns   = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  postfix       = var.postfix
   tags          = var.tags
 }
 
