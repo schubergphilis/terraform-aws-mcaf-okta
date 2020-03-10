@@ -28,12 +28,13 @@ module "platform_admin_role" {
     aws = aws
   }
 
-  source        = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.1.5"
-  name          = var.name
-  assume_policy = data.aws_iam_policy_document.okta_assume_policy.json
-  policy_arns   = ["arn:aws:iam::aws:policy/AdministratorAccess"]
-  postfix       = var.postfix
-  tags          = var.tags
+  source               = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.2.0"
+  name                 = var.name
+  assume_policy        = data.aws_iam_policy_document.okta_assume_policy.json
+  max_session_duration = var.max_session_duration
+  policy_arns          = ["arn:aws:iam::aws:policy/AdministratorAccess"]
+  postfix              = var.postfix
+  tags                 = var.tags
 }
 
 data "aws_iam_policy_document" "cross_account_policy" {
