@@ -10,8 +10,8 @@ variable "metadata" {
 
 variable "max_session_duration" {
   type        = number
-  default     = 12
-  description = "The maximum session duration for the role"
+  default     = 43200
+  description = "The maximum session duration (in minutes) for the role"
 }
 
 variable "name" {
