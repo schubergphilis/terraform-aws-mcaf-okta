@@ -1,5 +1,3 @@
-provider "aws" {}
-
 resource "aws_iam_saml_provider" "default" {
   name                   = "OKTA"
   saml_metadata_document = var.metadata
