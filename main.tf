@@ -26,7 +26,7 @@ module "platform_admin_role" {
     aws = aws
   }
 
-  source               = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.2.0"
+  source               = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.0"
   name                 = var.name
   assume_policy        = data.aws_iam_policy_document.okta_assume_policy.json
   max_session_duration = var.max_session_duration
@@ -53,7 +53,7 @@ module "okta_cross_account_role" {
     aws = aws
   }
 
-  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.1.5"
+  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.0"
   name                  = "Okta-Idp-cross-account-role"
   principal_type        = "AWS"
   principal_identifiers = ["arn:aws:iam::${var.account_id}:root"]
