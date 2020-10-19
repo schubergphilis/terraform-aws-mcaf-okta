@@ -22,10 +22,6 @@ data "aws_iam_policy_document" "okta_assume_policy" {
 }
 
 module "platform_admin_role" {
-  providers = {
-    aws = aws
-  }
-
   source               = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.0"
   name                 = var.name
   assume_policy        = data.aws_iam_policy_document.okta_assume_policy.json
@@ -49,10 +45,6 @@ data "aws_iam_policy_document" "cross_account_policy" {
 }
 
 module "okta_cross_account_role" {
-  providers = {
-    aws = aws
-  }
-
   source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.0"
   name                  = "Okta-Idp-cross-account-role"
   principal_type        = "AWS"
