@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "okta_assume_policy" {
 }
 
 module "platform_admin_role" {
-  source               = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.0"
+  source               = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.1"
   name                 = var.name
   assume_policy        = data.aws_iam_policy_document.okta_assume_policy.json
   max_session_duration = var.max_session_duration
@@ -45,7 +45,7 @@ data "aws_iam_policy_document" "cross_account_policy" {
 }
 
 module "okta_cross_account_role" {
-  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.0"
+  source                = "github.com/schubergphilis/terraform-aws-mcaf-role?ref=v0.3.1"
   name                  = "Okta-Idp-cross-account-role"
   principal_type        = "AWS"
   principal_identifiers = ["arn:aws:iam::${var.account_id}:root"]
